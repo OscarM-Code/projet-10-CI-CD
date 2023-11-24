@@ -1,0 +1,36 @@
+name: Back-end CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+
+      - name: Run Tests
+        run: mvn test
+
+      - name: Build Back-end
+        run: mvn clean install
+
+      - name: Build Docker image
+        run: docker build -t bobapp-back .
+
+      - name: Deploy Back-end
+        run: docker run -p 8080:8080 --name bobapp-back -d bobapp-back
+
+      - name: Collect and report code coverage
+        run: |
+          mvn jacoco:report
+          # You might need to adjust the above command based on your project setup
