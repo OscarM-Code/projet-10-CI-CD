@@ -6,9 +6,12 @@ on:
       - main
 
 jobs:
-  build:
+  backend:
+    name: backend-deploy
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: back
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -31,6 +34,4 @@ jobs:
         run: docker run -p 8080:8080 --name bobapp-back -d bobapp-back
 
       - name: Collect and report code coverage
-        run: |
-          mvn jacoco:report
-          # You might need to adjust the above command based on your project setup
+        run: mvn jacoco:report
