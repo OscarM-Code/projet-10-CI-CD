@@ -57,5 +57,5 @@ jobs:
           context: ./back/
           file: ./back/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bobapp-back:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/bobapp-back:latest
       - run: echo "🍏 This job's status is ${{ job.status }}."
